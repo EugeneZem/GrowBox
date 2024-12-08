@@ -23,10 +23,10 @@ public:
 	child - номер подчиненного элемента меню (если подчиненного элемента не предусмотрено, указывается item)
 	p_function - указатель на вызываемую функцию void function()
 	*/
-	void new_item(const int item, const char* p_name, const int next, const int child);
-	void new_item(const int item, const char* p_name, const int next, void(*p_function)());
+	void new_item(int item, char* p_name, int next, int child);
+	void new_item(int item, char* p_name, int next, void(*p_function)());
 
-	void rebild();
+//	void rebild();
 
 	void next();
 	void children();
@@ -39,25 +39,36 @@ public:
 private:
 	class Menu_item
 	{
-		const char _number;				// Номер позиции меню
-		const char* _name;				// Наименование позиции меню
-		const char _numb_next;			// Номер следующей позиции меню
-		const char _numb_child;			// Номер подчиненной позиции меню
+		int _number;		// Номер позиции меню
+		char* _name;		// Наименование позиции меню
+		int _numb_next;		// Номер следующей позиции меню
+		int _numb_child;	// Номер подчиненной позиции меню
 		void(*_p_function)() = nullptr;	// Указатель на вызываемую функцию
 	public:
 		Menu_item();
-		Menu_item(const int number, const char* p_name, const int numb_next, const int _numb_child);
-		Menu_item(const int number, const char* p_name, const int numb_next, void(*_p_function)());
+		Menu_item(int number, char* p_name, int numb_next, int _numb_child);
+		Menu_item(int number, char* p_name, int numb_next, void(*_p_function)());
 		Menu_item(Menu_item& over) = delete;
-		Menu_item& operator = ( Menu_item& rhs) { return rhs; }
+		Menu_item& operator = ( const Menu_item& rhs)
+		{
+			if (&rhs != this)
+			{
+				_number = rhs._number;
+				_name = rhs._name;
+				_numb_next = rhs._numb_next;
+				_numb_child = rhs._numb_child;
+			}
+			return *this;
+
+		}
 		Menu_item(Menu_item&& over) = delete;
 
 		//Menu_item operator = (Menu_item& rhs) { return rhs; }
 
-		const int get_number() { return _number; }
-		const char* get_name() { return _name; }
-		const int get_next() const { return _numb_next; }
-		const int get_child() const { return _numb_child; }
+		int get_number() { return _number; }
+		char* get_name() { return _name; }
+		int get_next() const { return _numb_next; }
+		int get_child() const { return _numb_child; }
 		void(*get_function())() { return _p_function; }
 	};
 };

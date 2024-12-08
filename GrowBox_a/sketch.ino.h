@@ -20,8 +20,8 @@ void(*f1)();
 
 void setup()
 {
-//f1 = function1;
-config_menu(&GB_Menu, f1);
+f1 = function1;
+config_menu(&GB_Menu, f1); 
 GB_Menu.info();
 }
 
